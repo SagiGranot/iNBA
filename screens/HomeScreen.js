@@ -18,6 +18,7 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isLoading: true,
       teamLogos: null,
       predictions: null,
       team1: null,
@@ -38,7 +39,8 @@ export default class HomeScreen extends React.Component {
       .then(data => {
         this.setState({
           teamLogos: teams,
-          predictions: data.result
+          predictions: data.result,
+          isLoading: false
         })
       })
       .catch(err => console.error(err))
@@ -54,7 +56,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
           homeTeamChance: x,
           awayTeamChance: y,
-          hasPredictions: true
+          hasPredictions: true,
         })
       }
     })
@@ -115,6 +117,13 @@ export default class HomeScreen extends React.Component {
     this.setState({ team2: team })
   }
   render() {
+    if (this.state.isLoading) {
+      return (<ImageBackground source={require('../assets/images/nba.jpg')} style={{ width: '100%', height: '100%' }}>
+        <View style={{ position: 'absolute', alignSelf: 'center', top: 300 }}>
+          <Image source={require('../assets/images/ball.gif')} />
+        </View>
+      </ImageBackground>)
+    }
     return (
       <ImageBackground source={require('../assets/images/nba.jpg')} style={{ width: '100%', height: '100%' }}>
         <View style={{ marginTop: 40, height: 180 }}>

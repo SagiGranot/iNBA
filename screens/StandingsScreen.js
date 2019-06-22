@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, View, Text, StyleSheet, Dimensions, Button, ActivityIndicator, Image } from 'react-native'
+import { ImageBackground, View, Text, StyleSheet, Dimensions, Button, ActivityIndicator, Image, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default class SettingsScreen extends React.Component {
@@ -9,6 +9,7 @@ export default class SettingsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isLoading: true,
       teams: null,
       isEastern: true,
       Eastern: null,
@@ -25,7 +26,8 @@ export default class SettingsScreen extends React.Component {
         this.setState({
           Eastern: data.result[0].data.conferences[1],
           Western: data.result[0].data.conferences[0],
-          teams: teams
+          teams: teams,
+          isLoading: false
         })
       })
       .catch(err => console.error(err))
@@ -37,6 +39,7 @@ export default class SettingsScreen extends React.Component {
     this.setState({ isEastern: false })
   }
   createTableRow(data, i) {
+    const { navigate } = this.props.navigation;
     //find team image
     let teamImage;
     switch (data.name) {
@@ -221,7 +224,6 @@ export default class SettingsScreen extends React.Component {
         })
         break;
     }
-
     return (
       <View key={i} style={styles.bodyRow}>
         <View style={{ flex: 2, flexDirection: 'row' }}>
@@ -262,18 +264,21 @@ export default class SettingsScreen extends React.Component {
               <Text style={styles.tableSubject}>Southeast</Text>
               <View style={styles.table}>
                 {this.createHeaderRow()}
+                {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
                 {this.state.Eastern && this.state.Eastern.divisions[0].teams.map((rowData, i) => this.createTableRow(rowData, i))}
               </View>
               {/*  */}
               <Text style={styles.tableSubject}>Central</Text>
               <View style={styles.table}>
                 {this.createHeaderRow()}
+                {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
                 {this.state.Eastern && this.state.Eastern.divisions[1].teams.map((rowData, i) => this.createTableRow(rowData, i))}
               </View>
               {/*  */}
               <Text style={styles.tableSubject}>Atlantic</Text>
               <View style={styles.table}>
                 {this.createHeaderRow()}
+                {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
                 {this.state.Eastern && this.state.Eastern.divisions[2].teams.map((rowData, i) => this.createTableRow(rowData, i))}
               </View>
             </View>
@@ -291,18 +296,21 @@ export default class SettingsScreen extends React.Component {
             <Text style={styles.tableSubject}>Pacific</Text>
             <View style={styles.table}>
               {this.createHeaderRow()}
+              {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
               {this.state.Eastern && this.state.Western.divisions[0].teams.map((rowData, i) => this.createTableRow(rowData, i))}
             </View>
             {/*  */}
             <Text style={styles.tableSubject}>Southwest</Text>
             <View style={styles.table}>
               {this.createHeaderRow()}
+              {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
               {this.state.Eastern && this.state.Western.divisions[1].teams.map((rowData, i) => this.createTableRow(rowData, i))}
             </View>
             {/*  */}
             <Text style={styles.tableSubject}>Northwest</Text>
             <View style={styles.table}>
               {this.createHeaderRow()}
+              {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
               {this.state.Eastern && this.state.Western.divisions[2].teams.map((rowData, i) => this.createTableRow(rowData, i))}
             </View>
           </View>
