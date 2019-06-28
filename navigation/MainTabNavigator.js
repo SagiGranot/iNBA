@@ -3,15 +3,36 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
+import Predictions from '../screens/Predictions';
 import LeadersScreen from '../screens/LeadersScreen';
 import StandingsScreen from '../screens/StandingsScreen';
+import TeamDetailsScreen from '../screens/TeamDetailsScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: TeamDetailsScreen,
 });
 
 HomeStack.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name='ios-home'
+    />
+  ),
+  tabBarOptions: {
+    style: {
+      height: 50,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    }
+  }
+};
+
+const PredictionsStack = createStackNavigator({
+  Predictions: Predictions,
+});
+
+PredictionsStack.navigationOptions = {
   tabBarLabel: 'Odds',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -70,6 +91,7 @@ StandingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
+  PredictionsStack,
   LeadersStack,
   StandingsStack
 });

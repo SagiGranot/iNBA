@@ -18,6 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "splash": {
+      "image": "./assets/images/ball.gif",
+      "backgroungColor": "#fff"
     }
   }
 }
