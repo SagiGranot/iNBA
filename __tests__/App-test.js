@@ -3,6 +3,8 @@ import React from 'react';
 import App from '../App';
 import renderer from 'react-test-renderer';
 import NavigationTestUtils from 'react-navigation/NavigationTestUtils';
+import TeamDetailsScreen from '../screens/TeamDetailsScreen';
+
 
 describe('App snapshot', () => {
   jest.useFakeTimers();
@@ -19,4 +21,19 @@ describe('App snapshot', () => {
     const tree = renderer.create(<App skipLoadingScreen />).toJSON();
     expect(tree).toMatchSnapshot();
   });
+});
+
+
+describe('<App />', () => {
+  it('has 1 child', () => {
+    const tree = renderer.create(<App />).toJSON();
+    expect(tree.children.length).toBe(1);
+  });
+});
+
+describe('iNBA tests', function () {
+  test('renders correctly', async () => {
+    const testRenderer = renderer.create(<TeamDetailsScreen />)
+    expect(testRenderer.root.props).toHaveLength(0)
+  })
 });

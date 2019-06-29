@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, ImageBackground, View, Text, Dimensions, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Image, Button, StyleSheet, ImageBackground, View, Text, Dimensions, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default class HomeScreen extends React.Component {
@@ -18,8 +18,12 @@ export default class HomeScreen extends React.Component {
       selected: false,
       news: null,
       teamPlayers: null,
+      team_stats: null,
     }
     this.handlePress1 = this.handlePress1.bind(this)
+    this.createTableRow = this.createTableRow.bind(this)
+    this.createPlayer = this.createPlayer.bind(this)
+    this.reset = this.reset.bind(this)
   }
   componentWillMount() {
     const { width, height } = Dimensions.get("window");
@@ -59,8 +63,19 @@ export default class HomeScreen extends React.Component {
         }).then(response => response.json())
           .then(data => {
             this.setState({ team1_name: 'Washington Wizards', teamPlayers: data, team1: team, selected: true })
+            fetch('https://buzzer-beater.live/api/nba/team_stats', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ teamId: "583ec8d4-fb46-11e1-82cb-f4ce4684ea4c" })
+            })
+              .then(response => response.json())
+              .then(data => {
+                this.setState({ team_stats: data, isLoading: false })
+              })
           })
-          .catch(err => { this.setState({ team1_name: 'Washington Wizards', teamPlayers: null, team1: team, selected: true }) })
+          .catch(err => { this.setState({ team1_name: 'Washington Wizards', teamPlayers: null, team1: team, selected: true, isLoading: false }) })
         break;
       case 'HOU':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -74,6 +89,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Houston Rockets', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Houston Rockets', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec825-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'CHA':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -87,6 +113,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Charlotte Hornets', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Charlotte Hornets', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec97e-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'PHI':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -100,6 +137,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Philadelphia 76ers', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Philadelphia 76ers', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec87d-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'OKC':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -113,6 +161,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Oklahoma City Thunder', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Oklahoma City Thunder', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecfff-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'POR':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -126,6 +185,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Portland Trail Blazers', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Portland Trail Blazers', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ed056-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'NOP':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -139,6 +209,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'New Orleans Pelicans', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'New Orleans Pelicans', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecc9a-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'GSW':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -152,6 +233,18 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Golden State Warriors', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Golden State Warriors', teamPlayers: null, team1: team, selected: true }) })
+
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec825-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'MIL':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -165,6 +258,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Milwaukee Bucks', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Milwaukee Bucks', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecefd-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'ORL':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -178,6 +282,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Orlando Magic', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Orlando Magic', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ed157-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'MIA':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -191,6 +306,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Miami Heat', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Miami Heat', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecea6-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'ATL':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -204,6 +330,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Atlanta Hawks', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Atlanta Hawks', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecb8f-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'IND':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -217,6 +354,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Indiana Pacers', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Indiana Pacers', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec7cd-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'DET':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -230,6 +378,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Detroit Pistons', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Detroit Pistons', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec928-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'CHI':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -243,6 +402,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Chicago Bulls', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Chicago Bulls', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec5fd-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'CLE':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -256,6 +426,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Cleveland Cavaliers', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Cleveland Cavaliers', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec773-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'TOR':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -269,6 +450,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Toronto Raptors', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Toronto Raptors', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecda6-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'BOS':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -282,6 +474,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Boston Celtics', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Boston Celtics', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583eccfa-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'BRK':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -295,6 +498,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Brooklyn Nets', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Brooklyn Nets', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec9d6-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'NYK':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -308,6 +522,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'New York Knicks', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'New York Knicks', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ec70e-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'LAC':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -321,6 +546,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Los Angeles Clippers', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Los Angeles Clippers', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecdfb-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'SAC':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -334,6 +570,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Sacramento Kings', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Sacramento Kings', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ed0ac-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'LAL':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -347,6 +594,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Los Angeles Lakers', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Los Angeles Lakers', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecae2-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'PHX':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -360,6 +618,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Phoenix Suns', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Phoenix Suns', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecfa8-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'SAS':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -373,6 +642,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'San Antonio Spurs', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'San Antonio Spurs', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecd4f-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'DAL':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -386,6 +666,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Dallas Mavericks', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Dallas Mavericks', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ecf50-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'MEM':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -399,6 +690,18 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Memphis Grizzlies', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Memphis Grizzlies', teamPlayers: null, team1: team, selected: true }) })
+
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583eca88-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'DEN':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -412,6 +715,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Denver Nuggets', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Denver Nuggets', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ed102-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'UTA':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -425,6 +739,17 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Utah Jazz', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Utah Jazz', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583ece50-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       case 'MIN':
         fetch('https://buzzer-beater.live/api/nba/team_details', {
@@ -438,13 +763,26 @@ export default class HomeScreen extends React.Component {
             this.setState({ team1_name: 'Minnesota Timberwolves', teamPlayers: data, team1: team, selected: true })
           })
           .catch(err => { this.setState({ team1_name: 'Minnesota Timberwolves', teamPlayers: null, team1: team, selected: true }) })
+        fetch('https://buzzer-beater.live/api/nba/team_stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamId: "583eca2f-fb46-11e1-82cb-f4ce4684ea4c" })
+        }).then(response => response.json())
+          .then(data => {
+            this.setState({ team_stats: data, isLoading: false })
+          })
+          .catch(err => { this.setState({ isLoading: false }) })
         break;
       default:
         this.setState({ team1_name: '', team1: team, selected: true })
     }
 
   }
-
+  toggleLoading() {
+    this.setState({ isLoading: !this.state.isLoading })
+  }
   createTableRow(i) {
     return (
       <View key={i}>
@@ -453,8 +791,8 @@ export default class HomeScreen extends React.Component {
         </View>
         <View style={styles.bodyRow}>
           <View style={{ flex: 1, flexDirection: 'row' }}>
-            <Image style={{ width: 90, height: 60, alignSelf: 'center' }} source={{ uri: this.state.news[i].image }} />
-            <Text style={{ color: '#fff', textAlign: 'left' }}> {this.state.news[i].body.substring(0, 200) + '...'}</Text>
+            <Image style={{ width: 100, height: 75, alignSelf: 'center', marginRight: 5 }} source={{ uri: this.state.news[i].image }} />
+            <Text style={{ color: '#fff', textAlign: 'left', width: 250 }}> {this.state.news[i].body.substring(0, 150) + '...'}</Text>
           </View>
         </View>
       </View>
@@ -469,9 +807,18 @@ export default class HomeScreen extends React.Component {
       </View>
     )
   }
+  reset() {
+    this.setState({ selected: false, team1: null, team1_name: null, teamPlayers: null, team_stats: null })
+  }
   render() {
     const state = this.state;
-    console.log(this.state.teamPlayers)
+    if (this.state.isLoading) {
+      return (<ImageBackground source={require('../assets/images/nba.jpg')} style={{ width: '100%', height: '100%' }}>
+        <View style={{ position: 'absolute', alignSelf: 'center', top: 300 }}>
+          <Image source={require('../assets/images/ball.gif')} />
+        </View>
+      </ImageBackground>)
+    }
     return (
       <ImageBackground source={require('../assets/images/nba.jpg')} style={{ width: '100%', height: '100%' }}>
         <ScrollView>
@@ -479,7 +826,10 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.home}>SELECT A TEAM</Text>
             <ScrollView horizontal={true}>
               {this.state.teamLogos && this.state.teamLogos.TeamsLogos.map((team, i) => {
-                return <TouchableOpacity key={i} onPress={() => this.handlePress1(team)}>
+                return <TouchableOpacity key={i} onPress={() => {
+                  this.toggleLoading()
+                  this.handlePress1(team)
+                }}>
                   <Image
                     key={team.name}
                     source={team.url}
@@ -501,8 +851,7 @@ export default class HomeScreen extends React.Component {
               })}
             </View>
           </View>}
-          {/*  */}
-          {state.selected && <View style={{ marginTop: 40, }}>
+          {state.selected && state.teamPlayers.message == "Team's details Fetched!" && <View style={{ marginTop: 40, }}>
             <View style={{ flexDirection: 'row', marginBottom: 25 }}>
               <Image
                 source={this.state.team1.url}
@@ -516,24 +865,52 @@ export default class HomeScreen extends React.Component {
                 {state.teamPlayers.result.players.map((player, i) => { return this.createPlayer(i) })}
               </View>
             </ScrollView>
+          </View>}
+          {state.team_stats && state.team_stats.result && state.team_stats.result.own_record && <View>
             <Text style={styles.tableSubject}>TEAM STATS</Text>
-            <View style={{ width: 250, backgroundColor: 'rgba(0,0,0,0.6)', borderRadius: 4, borderWidth: 0.5, alignSelf: 'center' }}>
+            <View style={{ width: 300, backgroundColor: 'rgba(0,0,0,0.6)', borderRadius: 4, borderWidth: 0.5, alignSelf: 'center' }}>
               <View style={styles.headerRow}>
-                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', paddingLeft: 20 }}>Average</Text>
+                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', paddingLeft: 50 }}>Average</Text>
                 <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>Total</Text>
               </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ color: '#ffc24d', }}>Points</Text>
-                <Text style={{ color: '#fff', marginLeft: 25 }}> TEST</Text>
-                <Text style={{ color: '#fff', marginLeft: 70 }}> TEST</Text>
+              <View style={styles.statRow}>
+                <Text style={{ color: '#ffc24d', width: 65 }}>Points</Text>
+                <Text style={{ color: '#fff', marginLeft: 25 }}> {state.team_stats.result.own_record.average.points}</Text>
+                <Text style={{ color: '#fff', position: 'absolute', left: 210 }}> {state.team_stats.result.own_record.total.points}</Text>
               </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ color: '#ffc24d', }}>Points</Text>
-                <Text style={{ color: '#fff', marginLeft: 25 }}> TEST</Text>
-                <Text style={{ color: '#fff', marginLeft: 70 }}> TEST</Text>
+              <View style={styles.statRow}>
+                <Text style={{ color: '#ffc24d', width: 65 }}>Assists</Text>
+                <Text style={{ color: '#fff', marginLeft: 25 }}> {state.team_stats.result.own_record.average.assists}</Text>
+                <Text style={{ color: '#fff', position: 'absolute', left: 210 }}> {state.team_stats.result.own_record.total.assists}</Text>
+              </View>
+              <View style={styles.statRow}>
+                <Text style={{ color: '#ffc24d', width: 65 }}>Rebounds</Text>
+                <Text style={{ color: '#fff', marginLeft: 25 }}> {state.team_stats.result.own_record.average.rebounds}</Text>
+                <Text style={{ color: '#fff', position: 'absolute', left: 210 }}> {state.team_stats.result.own_record.total.rebounds}</Text>
+              </View>
+              <View style={styles.statRow}>
+                <Text style={{ color: '#ffc24d', width: 65 }}>Steals</Text>
+                <Text style={{ color: '#fff', marginLeft: 25 }}> {state.team_stats.result.own_record.average.steals}</Text>
+                <Text style={{ color: '#fff', position: 'absolute', left: 210 }}> {state.team_stats.result.own_record.total.steals}</Text>
+              </View>
+              <View style={styles.statRow}>
+                <Text style={{ color: '#ffc24d', width: 65 }}>Blocks</Text>
+                <Text style={{ color: '#fff', marginLeft: 25 }}> {state.team_stats.result.own_record.average.blocks}</Text>
+                <Text style={{ color: '#fff', position: 'absolute', left: 210 }}> {state.team_stats.result.own_record.total.blocks}</Text>
+              </View>
+              <View style={styles.statRow}>
+                <Text style={{ color: '#ffc24d', width: 65 }}>Fouls</Text>
+                <Text style={{ color: '#fff', marginLeft: 25 }}> {state.team_stats.result.own_record.average.fouls_drawn}</Text>
+                <Text style={{ color: '#fff', position: 'absolute', left: 210 }}> {state.team_stats.result.own_record.total.total_fouls}</Text>
               </View>
             </View>
           </View>}
+          {state.selected && <View style={{ marginTop: 15 }}><Button
+            onPress={this.reset}
+            title="Go Back"
+            color="#841584"
+            accessibilityLabel="Go Back"
+          /></View>}
         </ScrollView>
       </ImageBackground>
     );
@@ -576,7 +953,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     fontSize: 35,
     fontWeight: 'bold',
-    opacity: 0.7
+    opacity: 1
   },
   teamName: {
     height: 40,
@@ -593,6 +970,24 @@ const styles = StyleSheet.create({
     width: 120,
     height: 100,
     marginRight: 10,
-
+  },
+  statRow: {
+    flexDirection: 'row',
+    margin: 5,
+    position: 'relative'
+  },
+  resetBtn: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+  },
+  resetBtnTxt: {
+    paddingRight: 30,
+    paddingTop: 30,
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 3 },
+    textShadowRadius: 5,
   }
 });

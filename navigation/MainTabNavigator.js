@@ -33,7 +33,7 @@ const PredictionsStack = createStackNavigator({
 });
 
 PredictionsStack.navigationOptions = {
-  tabBarLabel: 'Odds',
+  tabBarLabel: 'Predictions',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}

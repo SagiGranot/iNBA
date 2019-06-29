@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     fontSize: 35,
     fontWeight: 'bold',
-    opacity: 0.7
+    opacity: 1
   },
   away: {
     alignSelf: 'flex-end',
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     fontSize: 35,
     fontWeight: 'bold',
-    opacity: 0.7
+    opacity: 1
   },
   Circle: {
     position: 'relative',
