@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image, Button, StyleSheet, ImageBackground, View, Text, Dimensions, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Image, Button, StyleSheet, ImageBackground, View, Text, Dimensions, AsyncStorage, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Icon } from 'expo';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -50,7 +51,10 @@ export default class HomeScreen extends React.Component {
       })
       .catch(err => console.error(err))
   }
-
+  _signOutAsync = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Auth');
+  };
   handlePress1(team) {
     switch (team.name) {
       case 'WAS':
@@ -822,8 +826,15 @@ export default class HomeScreen extends React.Component {
     return (
       <ImageBackground source={require('../assets/images/nba.jpg')} style={{ width: '100%', height: '100%' }}>
         <ScrollView>
-          {!state.selected && <View style={{ marginTop: 40, height: 190 }}>
-            <Text style={styles.home}>SELECT A TEAM</Text>
+          <TouchableHighlight onPress={this._signOutAsync}><Icon.Ionicons
+            name='ios-power'
+            size={26}
+            style={{ marginRight: 20, marginTop: 40, alignSelf: 'flex-end', textShadowColor: '#000', textShadowOffset: { width: 2, height: 2 }, textShadowRadius: 6 }}
+            color='#fff'
+          />
+          </TouchableHighlight>
+          {!state.selected && <View style={{ marginTop: 0, height: 190 }}>
+            <Text style={styles.home}>TEAMS</Text>
             <ScrollView horizontal={true}>
               {this.state.teamLogos && this.state.teamLogos.TeamsLogos.map((team, i) => {
                 return <TouchableOpacity key={i} onPress={() => {
@@ -851,7 +862,7 @@ export default class HomeScreen extends React.Component {
               })}
             </View>
           </View>}
-          {state.selected && state.teamPlayers.message == "Team's details Fetched!" && <View style={{ marginTop: 40, }}>
+          {state.selected && state.teamPlayers.message == "Team's details Fetched!" && <View style={{ marginTop: 0, }}>
             <View style={{ flexDirection: 'row', marginBottom: 25 }}>
               <Image
                 source={this.state.team1.url}

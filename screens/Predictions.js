@@ -70,20 +70,21 @@ export default class HomeScreen extends React.Component {
             fontSize: 30,
             fontWeight: 'bold',
             textShadowColor: '#FFF',
-            textShadowOffset: { width: 2, height: 1 },
+            textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 1,
             paddingRight: 8
-          }} >{this.state.homeTeamChance}</Text>
+          }} >{this.state.homeTeamChance * 100}%</Text>
       else return <Text
         style={{
           color: 'red',
+          alignSelf: 'flex-end',
           fontSize: 30,
           fontWeight: 'bold',
           textShadowColor: '#FFF',
-          textShadowOffset: { width: 2, height: 1 },
+          textShadowOffset: { width: 1, height: 1 },
           textShadowRadius: 1,
           paddingRight: 8
-        }}>{this.state.homeTeamChance}</Text>
+        }}>{this.state.homeTeamChance * 100}%</Text>
     }
     else if (this.state.awayTeamChance && team === 'away') {
       if (this.state.awayTeamChance >= 0.5)
@@ -93,20 +94,20 @@ export default class HomeScreen extends React.Component {
             fontSize: 30,
             fontWeight: 'bold',
             textShadowColor: '#FFF',
-            textShadowOffset: { width: 2, height: 1 },
+            textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 1,
             paddingRight: 8
-          }}>{this.state.awayTeamChance}</Text>
+          }}>{this.state.awayTeamChance * 100}%</Text>
       else return <Text
         style={{
           color: 'red',
           fontSize: 30,
           fontWeight: 'bold',
           textShadowColor: '#FFF',
-          textShadowOffset: { width: 2, height: 1 },
+          textShadowOffset: { width: 1, height: 1 },
           textShadowRadius: 1,
           paddingRight: 8
-        }}>{this.state.awayTeamChance}</Text>
+        }}>{this.state.awayTeamChance * 100}%</Text>
 
     }
   }

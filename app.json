@@ -20,7 +20,7 @@
       "supportsTablet": true
     },
     "splash": {
-      "image": "./assets/images/ball.gif",
+      "image": "./assets/images/compile.gif",
       "backgroungColor": "#fff"
     }
   }
