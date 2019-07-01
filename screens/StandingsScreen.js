@@ -1,11 +1,62 @@
-import React from 'react';
-import { ImageBackground, View, Text, StyleSheet, Dimensions, Button, ActivityIndicator, Image, TouchableOpacity } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler';
+import React from 'react'
+import {
+  ImageBackground,
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Button,
+  ActivityIndicator,
+  Image,
+  ScrollView
+} from 'react-native'
+
+const styles = StyleSheet.create({
+  groupButton: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop: 45,
+    width: Dimensions.get('window').width - 150,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 4,
+    borderWidth: 0.5,
+    flexDirection: 'row'
+  },
+  table: {
+    width: Dimensions.get('window').width - 10,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 4,
+    borderWidth: 0.5
+  },
+  bodyRow: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  headerRow: {
+    flexDirection: 'row',
+    paddingBottom: 10
+  },
+  tableSubject: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 2,
+    paddingBottom: 5
+  },
+  tableTxt: {
+    flex: 1,
+    color: '#fff',
+    paddingBottom: 5
+  }
+})
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
-    header: null,
-  };
+    header: null
+  }
   constructor(props) {
     super(props)
     this.state = {
@@ -19,14 +70,14 @@ export default class SettingsScreen extends React.Component {
     this.setEasternOFF = this.setEasternOFF.bind(this)
   }
   componentDidMount() {
-    const teams = require('../teamLogos');
+    const teams = require('../teamLogos')
     fetch('https://buzzer-beater.live/api/nba/standings')
       .then(res => res.json())
       .then(data => {
         this.setState({
           Eastern: data.result[0].data.conferences[1],
           Western: data.result[0].data.conferences[0],
-          teams: teams,
+          teams,
           isLoading: false
         })
       })
@@ -39,190 +90,159 @@ export default class SettingsScreen extends React.Component {
     this.setState({ isEastern: false })
   }
   createTableRow(data, i) {
-    const { navigate } = this.props.navigation;
     //find team image
-    let teamImage;
+    let teamImage
     switch (data.name) {
       case 'Wizards':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'WAS')
-            teamImage = team.url;
+          if (team.name === 'WAS') teamImage = team.url
         })
-        break;
+        break
       case 'Rockets':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'HOU')
-            teamImage = team.url;
+          if (team.name === 'HOU') teamImage = team.url
         })
-        break;
+        break
       case 'Hornets':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'CHA')
-            teamImage = team.url;
+          if (team.name === 'CHA') teamImage = team.url
         })
-        break;
+        break
       case '76ers':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'PHI')
-            teamImage = team.url;
+          if (team.name === 'PHI') teamImage = team.url
         })
-        break;
+        break
       case 'Thunder':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'OKC')
-            teamImage = team.url;
+          if (team.name === 'OKC') teamImage = team.url
         })
-        break;
+        break
       case 'Trail Blazers':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'POR')
-            teamImage = team.url;
+          if (team.name === 'POR') teamImage = team.url
         })
-        break;
+        break
       case 'Pelicans':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'NOP')
-            teamImage = team.url;
+          if (team.name === 'NOP') teamImage = team.url
         })
-        break;
+        break
       case 'Warriors':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'GSW')
-            teamImage = team.url;
+          if (team.name === 'GSW') teamImage = team.url
         })
-        break;
+        break
       case 'Bucks':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MIL')
-            teamImage = team.url;
+          if (team.name === 'MIL') teamImage = team.url
         })
-        break;
+        break
       case 'Magic':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'ORL')
-            teamImage = team.url;
+          if (team.name === 'ORL') teamImage = team.url
         })
-        break;
+        break
       case 'Heat':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MIA')
-            teamImage = team.url;
+          if (team.name === 'MIA') teamImage = team.url
         })
-        break;
+        break
       case 'Hawks':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'ATL')
-            teamImage = team.url;
+          if (team.name === 'ATL') teamImage = team.url
         })
-        break;
+        break
       case 'Pacers':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'IND')
-            teamImage = team.url;
+          if (team.name === 'IND') teamImage = team.url
         })
-        break;
+        break
       case 'Pistons':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'DET')
-            teamImage = team.url;
+          if (team.name === 'DET') teamImage = team.url
         })
-        break;
+        break
       case 'Bulls':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'CHI')
-            teamImage = team.url;
+          if (team.name === 'CHI') teamImage = team.url
         })
-        break;
+        break
       case 'Cavaliers':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'CLE')
-            teamImage = team.url;
+          if (team.name === 'CLE') teamImage = team.url
         })
-        break;
+        break
       case 'Raptors':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'TOR')
-            teamImage = team.url;
+          if (team.name === 'TOR') teamImage = team.url
         })
-        break;
+        break
       case 'Celtics':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'BOS')
-            teamImage = team.url;
+          if (team.name === 'BOS') teamImage = team.url
         })
-        break;
+        break
       case 'Nets':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'BKN')
-            teamImage = team.url;
+          if (team.name === 'BKN') teamImage = team.url
         })
-        break;
+        break
       case 'Knicks':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'NYK')
-            teamImage = team.url;
+          if (team.name === 'NYK') teamImage = team.url
         })
-        break;
+        break
       case 'Clippers':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'LAC')
-            teamImage = team.url;
+          if (team.name === 'LAC') teamImage = team.url
         })
-        break;
+        break
       case 'Kings':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'SAC')
-            teamImage = team.url;
+          if (team.name === 'SAC') teamImage = team.url
         })
-        break;
+        break
       case 'Lakers':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'LAL')
-            teamImage = team.url;
+          if (team.name === 'LAL') teamImage = team.url
         })
-        break;
+        break
       case 'Suns':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'PHX')
-            teamImage = team.url;
+          if (team.name === 'PHX') teamImage = team.url
         })
-        break;
+        break
       case 'Spurs':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'SAS')
-            teamImage = team.url;
+          if (team.name === 'SAS') teamImage = team.url
         })
-        break;
+        break
       case 'Mavericks':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'DAL')
-            teamImage = team.url;
+          if (team.name === 'DAL') teamImage = team.url
         })
-        break;
+        break
       case 'Grizzlies':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MEM')
-            teamImage = team.url;
+          if (team.name === 'MEM') teamImage = team.url
         })
-        break;
+        break
       case 'Nuggets':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'DEN')
-            teamImage = team.url;
+          if (team.name === 'DEN') teamImage = team.url
         })
-        break;
+        break
       case 'Jazz':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'UTA')
-            teamImage = team.url;
+          if (team.name === 'UTA') teamImage = team.url
         })
-        break;
+        break
       case 'Timberwolves':
         this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MIN')
-            teamImage = team.url;
+          if (team.name === 'MIN') teamImage = team.url
         })
-        break;
+        break
     }
     return (
       <View key={i} style={styles.bodyRow}>
@@ -241,12 +261,24 @@ export default class SettingsScreen extends React.Component {
   createHeaderRow() {
     return (
       <View style={styles.headerRow}>
-        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>Team</Text>
-        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>Wins</Text>
-        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>Losses</Text>
-        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>% Win</Text>
-        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>GB League</Text>
-        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>GB  Conf.</Text>
+        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>
+          Team
+        </Text>
+        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>
+          Wins
+        </Text>
+        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>
+          Losses
+        </Text>
+        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>
+          % Win
+        </Text>
+        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>
+          GB League
+        </Text>
+        <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d', alignSelf: 'center' }}>
+          GB Conf.
+        </Text>
       </View>
     )
   }
@@ -285,7 +317,7 @@ export default class SettingsScreen extends React.Component {
           </ScrollView>
         </ImageBackground>
       )
-    else return (
+    return (
       <ImageBackground source={require('../assets/images/nba.jpg')} style={{ width: '100%', height: '100%' }}>
         <View style={styles.groupButton}>
           <Button onPress={this.setEastern} title='Eastern' color='#85632e' />
@@ -316,62 +348,6 @@ export default class SettingsScreen extends React.Component {
           </View>
         </ScrollView>
       </ImageBackground>
-    );
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  groupButton: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    marginTop: 45,
-    width: Dimensions.get("window").width - 150,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    borderRadius: 4,
-    borderWidth: 0.5,
-    flexDirection: 'row'
-  },
-  grpBtnTxtON: {
-    flex: 1,
-    textAlign: 'center',
-    color: '#ffc24d',
-    fontWeight: 'bold',
-    fontSize: 18
-  },
-  grpBtnTxtOFF: {
-    flex: 1,
-    textAlign: 'center',
-    color: '#ffc24d',
-    fontSize: 18,
-    opacity: 0.6
-  },
-  table: {
-    width: Dimensions.get("window").width - 10,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    borderRadius: 4,
-    borderWidth: 0.5,
-  },
-  bodyRow: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  headerRow: {
-    flexDirection: 'row',
-    paddingBottom: 10
-  },
-  tableSubject: {
-    fontSize: 20,
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    textShadowColor: '#000',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 2,
-    paddingBottom: 5
-  },
-  tableTxt: {
-    flex: 1,
-    color: '#fff',
-    paddingBottom: 5
-  }
-});
