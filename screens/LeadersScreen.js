@@ -9,6 +9,7 @@ import {
   ScrollView
 } from 'react-native'
 import styles from '../styles/styles_screen4'
+import setTeamImage from '../setTeamImage'
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -60,178 +61,25 @@ export default class LinksScreen extends React.Component {
       .catch(err => console.error(err))
   }
   createTableRow(data, i) {
-    //find team image
-    let teamImage
-    switch (data.teams[0].name) {
-      case 'Wizards':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'WAS') teamImage = team.url
-        })
-        break
-      case 'Rockets':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'HOU') teamImage = team.url
-        })
-        break
-      case 'Hornets':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'CHA') teamImage = team.url
-        })
-        break
-      case '76ers':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'PHI') teamImage = team.url
-        })
-        break
-      case 'Thunder':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'OKC') teamImage = team.url
-        })
-        break
-      case 'Trail Blazers':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'POR') teamImage = team.url
-        })
-        break
-      case 'Pelicans':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'NOP') teamImage = team.url
-        })
-        break
-      case 'Warriors':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'GSW') teamImage = team.url
-        })
-        break
-      case 'Bucks':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MIL') teamImage = team.url
-        })
-        break
-      case 'Magic':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'ORL') teamImage = team.url
-        })
-        break
-      case 'Heat':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MIA') teamImage = team.url
-        })
-        break
-      case 'Hawks':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'ATL') teamImage = team.url
-        })
-        break
-      case 'Pacers':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'IND') teamImage = team.url
-        })
-        break
-      case 'Pistons':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'DET') teamImage = team.url
-        })
-        break
-      case 'Bulls':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'CHI') teamImage = team.url
-        })
-        break
-      case 'Cavaliers':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'CLE') teamImage = team.url
-        })
-        break
-      case 'Raptors':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'TOR') teamImage = team.url
-        })
-        break
-      case 'Celtics':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'BOS') teamImage = team.url
-        })
-        break
-      case 'Nets':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'BKN') teamImage = team.url
-        })
-        break
-      case 'Knicks':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'NYK') teamImage = team.url
-        })
-        break
-      case 'Clippers':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'LAC') teamImage = team.url
-        })
-        break
-      case 'Kings':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'SAC') teamImage = team.url
-        })
-        break
-      case 'Lakers':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'LAL') teamImage = team.url
-        })
-        break
-      case 'Suns':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'PHX') teamImage = team.url
-        })
-        break
-      case 'Spurs':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'SAS') teamImage = team.url
-        })
-        break
-      case 'Mavericks':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'DAL') teamImage = team.url
-        })
-        break
-      case 'Grizzlies':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MEM') teamImage = team.url
-        })
-        break
-      case 'Nuggets':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'DEN') teamImage = team.url
-        })
-        break
-      case 'Jazz':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'UTA') teamImage = team.url
-        })
-        break
-      case 'Timberwolves':
-        this.state.teams.TeamsLogos.forEach(team => {
-          if (team.name === 'MIN') teamImage = team.url
-        })
-        break
-    }
+    const teamImage = setTeamImage(data.teams[0], this.state.teams.TeamsLogos)
 
     return (
       <View key={i} style={styles.bodyRow}>
-        <Text style={{ flex: 1, color: '#fff', paddingLeft: 5 }}>{i + 1}</Text>
-        <View style={{ flex: 3, flexDirection: 'column' }}>
+        <Text style={styles.number}>{i + 1}</Text>
+        <View style={styles.player}>
           <Image
-            style={{ width: 50, height: 50, alignSelf: 'center' }}
+            style={styles.playerImg}
             source={{
               uri: `https://nba-players.herokuapp.com/players/${data.player.last_name}/${data.player.first_name}`
             }}
           />
-          <Text style={{ color: '#fff', textAlign: 'center' }}>{data.player.full_name}</Text>
+          <Text style={styles.playerName}>{data.player.full_name}</Text>
         </View>
-        <View style={{ flex: 3, flexDirection: 'column' }}>
-          <Image style={{ width: 50, height: 50, alignSelf: 'center' }} source={teamImage} />
-          <Text style={{ color: '#fff', textAlign: 'center' }}>{data.teams[0].name}</Text>
+        <View style={styles.team}>
+          <Image style={styles.teamImg} source={teamImage} />
+          <Text style={styles.teamName}>{data.teams[0].name}</Text>
         </View>
-        <Text style={{ flex: 1, color: '#fff' }}>{data.score}</Text>
+        <Text style={styles.score}>{data.score}</Text>
       </View>
     )
   }
@@ -239,64 +87,58 @@ export default class LinksScreen extends React.Component {
     const state = this.state
     console.log(state.points_average)
     return (
-      <ImageBackground
-        source={require('../assets/images/nba.jpg')}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <View style={{ height: 35 }}></View>
+      <ImageBackground source={require('../assets/images/nba.jpg')} style={styles.imgBg}>
+        <View style={styles.padd}></View>
         <ScrollView>
-          <View style={{ marginTop: 20, alignItems: 'center' }}>
+          <View style={styles.firstTable}>
             <Text style={styles.tableSubject}>Minutes (Total)</Text>
             <View style={styles.table}>
               <View style={styles.headerRow}>
-                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Rank</Text>
-                <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Player</Text>
-                <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Team</Text>
-                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Score</Text>
+                <Text style={styles.prop1}>Rank</Text>
+                <Text style={styles.prop}>Player</Text>
+                <Text style={styles.prop}>Team</Text>
+                <Text style={styles.prop1}>Score</Text>
               </View>
               {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
               {state.minutes_total &&
                 state.minutes_total.map((rowData, i) => this.createTableRow(rowData, i))}
             </View>
           </View>
-          {/*  */}
-          <View style={{ marginTop: 60, alignItems: 'center' }}>
+          <View style={styles.aTable}>
             <Text style={styles.tableSubject}>Minutes (Average)</Text>
             <View style={styles.table}>
               <View style={styles.headerRow}>
-                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Rank</Text>
-                <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Player</Text>
-                <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Team</Text>
-                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Score</Text>
+                <Text style={styles.prop1}>Rank</Text>
+                <Text style={styles.prop}>Player</Text>
+                <Text style={styles.prop}>Team</Text>
+                <Text style={styles.prop1}>Score</Text>
               </View>
               {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
               {state.minutes_total &&
                 state.minutes_average.map((rowData, i) => this.createTableRow(rowData, i))}
             </View>
           </View>
-          {/*  */}
-          <View style={{ marginTop: 60, alignItems: 'center' }}>
+          <View style={styles.aTable}>
             <Text style={styles.tableSubject}>Points (Total)</Text>
             <View style={styles.table}>
               <View style={styles.headerRow}>
-                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Rank</Text>
-                <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Player</Text>
-                <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Team</Text>
-                <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Score</Text>
+                <Text style={styles.prop1}>Rank</Text>
+                <Text style={styles.prop}>Player</Text>
+                <Text style={styles.prop}>Team</Text>
+                <Text style={styles.prop1}>Score</Text>
               </View>
               {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
               {state.minutes_total &&
                 state.points_total.map((rowData, i) => this.createTableRow(rowData, i))}
             </View>
-            {/*  */}
-            <View style={{ marginTop: 60, alignItems: 'center' }}>
+            <View style={styles.aTable}>
               <Text style={styles.tableSubject}>Points (Average)</Text>
               <View style={styles.table}>
                 <View style={styles.headerRow}>
-                  <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Rank</Text>
-                  <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Player</Text>
-                  <Text style={{ flex: 3, textAlign: 'center', color: '#ffc24d' }}>Team</Text>
-                  <Text style={{ flex: 1, textAlign: 'center', color: '#ffc24d' }}>Score</Text>
+                  <Text style={styles.prop1}>Rank</Text>
+                  <Text style={styles.prop}>Player</Text>
+                  <Text style={styles.prop}>Team</Text>
+                  <Text style={styles.prop1}>Score</Text>
                 </View>
                 {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
                 {state.minutes_total &&

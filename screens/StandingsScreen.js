@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import styles from '../styles/styles_screen2'
 import setTeamImage from '../setTeamImage'
+
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
     header: null
