@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  ImageBackground
-} from 'react-native'
+import { Image, ScrollView, TouchableOpacity, View, Text, ImageBackground } from 'react-native'
 import styles from '../styles/styles_screen3'
 
 export default class HomeScreen extends React.Component {
@@ -28,7 +20,7 @@ export default class HomeScreen extends React.Component {
     }
     this.handlePress1 = this.handlePress1.bind(this)
     this.handlePress2 = this.handlePress2.bind(this)
-    this.calcPredictions = this.calcPredictions.bind(this)
+    this.handlePredictions = this.handlePredictions.bind(this)
     this.showPrediction = this.showPrediction.bind(this)
   }
   componentDidMount() {
@@ -44,7 +36,7 @@ export default class HomeScreen extends React.Component {
       })
       .catch(err => console.error(err))
   }
-  calcPredictions() {
+  handlePredictions() {
     console.log('Home: ' + this.state.team1.name + ' Away: ' + this.state.team2.name)
     console.log('Searching prediction...')
     this.state.predictions.map(pred => {
@@ -57,74 +49,18 @@ export default class HomeScreen extends React.Component {
           hasPredictions: true
         })
       }
+      return null
     })
   }
   showPrediction(team) {
     if (this.state.homeTeamChance && team === 'home') {
       if (this.state.homeTeamChance >= 0.5)
-        return (
-          <Text
-            style={{
-              color: 'green',
-              fontSize: 30,
-              fontWeight: 'bold',
-              textShadowColor: '#FFF',
-              textShadowOffset: { width: 1, height: 1 },
-              textShadowRadius: 1,
-              paddingRight: 8
-            }}
-          >
-            {this.state.homeTeamChance * 100}%
-          </Text>
-        )
-      return (
-        <Text
-          style={{
-            color: 'red',
-            alignSelf: 'flex-end',
-            fontSize: 30,
-            fontWeight: 'bold',
-            textShadowColor: '#FFF',
-            textShadowOffset: { width: 1, height: 1 },
-            textShadowRadius: 1,
-            paddingRight: 8
-          }}
-        >
-          {this.state.homeTeamChance * 100}%
-        </Text>
-      )
+        return <Text style={styles.winner}>{this.state.homeTeamChance * 100}%</Text>
+      return <Text style={styles.loser}>{this.state.homeTeamChance * 100}%</Text>
     } else if (this.state.awayTeamChance && team === 'away') {
       if (this.state.awayTeamChance >= 0.5)
-        return (
-          <Text
-            style={{
-              color: 'green',
-              fontSize: 30,
-              fontWeight: 'bold',
-              textShadowColor: '#FFF',
-              textShadowOffset: { width: 1, height: 1 },
-              textShadowRadius: 1,
-              paddingRight: 8
-            }}
-          >
-            {this.state.awayTeamChance * 100}%
-          </Text>
-        )
-      return (
-        <Text
-          style={{
-            color: 'red',
-            fontSize: 30,
-            fontWeight: 'bold',
-            textShadowColor: '#FFF',
-            textShadowOffset: { width: 1, height: 1 },
-            textShadowRadius: 1,
-            paddingRight: 8
-          }}
-        >
-          {this.state.awayTeamChance * 100}%
-        </Text>
-      )
+        return <Text style={styles.winner}>{this.state.awayTeamChance * 100}%</Text>
+      return <Text style={styles.loser}>{this.state.awayTeamChance * 100}%</Text>
     }
   }
   handlePress1(team) {
@@ -136,22 +72,16 @@ export default class HomeScreen extends React.Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <ImageBackground
-          source={require('../assets/images/nba.jpg')}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <View style={{ position: 'absolute', alignSelf: 'center', top: 300 }}>
+        <ImageBackground source={require('../assets/images/nba.jpg')} style={styles.imgBg}>
+          <View style={styles.loading}>
             <Image source={require('../assets/images/ball.gif')} />
           </View>
         </ImageBackground>
       )
     }
     return (
-      <ImageBackground
-        source={require('../assets/images/nba.jpg')}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <View style={{ marginTop: 40, height: 180 }}>
+      <ImageBackground source={require('../assets/images/nba.jpg')} style={styles.imgBg}>
+        <View style={styles.homeBox}>
           <Text style={styles.home}>HOME</Text>
           <ScrollView horizontal>
             {this.state.teamLogos &&
@@ -161,7 +91,7 @@ export default class HomeScreen extends React.Component {
                     <Image
                       key={team.name}
                       source={team.url}
-                      style={{ height: 110, width: 110 }}
+                      style={styles.logo}
                       resizeMode="stretch"
                     />
                   </TouchableOpacity>
@@ -169,7 +99,7 @@ export default class HomeScreen extends React.Component {
               })}
           </ScrollView>
         </View>
-        <View style={{ height: 180 }}>
+        <View style={styles.awayBox}>
           <Text style={styles.away}>AWAY</Text>
           <ScrollView horizontal>
             {this.state.teamLogos &&
@@ -181,7 +111,7 @@ export default class HomeScreen extends React.Component {
                       <Image
                         key={team.name}
                         source={team.url}
-                        style={{ height: 110, width: 110 }}
+                        style={styles.logo}
                         resizeMode="stretch"
                       />
                     </TouchableOpacity>
@@ -199,31 +129,21 @@ export default class HomeScreen extends React.Component {
           {this.state.team1 && this.state.team2 && this.state.hasPredictions && (
             <Text style={styles.CircleTxt}>PREDICTIONS:</Text>
           )}
-          <View style={{ flexDirection: 'row' }}>
+          <View style={styles.results}>
             <View style={styles.Circle2}>
               {this.state.team1 && (
-                <Image
-                  source={this.state.team1.url}
-                  style={{ width: 90, height: 90, alignSelf: 'center' }}
-                />
+                <Image source={this.state.team1.url} style={styles.chosenTeam} />
               )}
             </View>
             <View style={styles.Circle2}>
               {this.state.team2 && (
-                <Image
-                  source={this.state.team2.url}
-                  style={{ width: 90, height: 90, alignSelf: 'center' }}
-                />
+                <Image source={this.state.team2.url} style={styles.chosenTeam} />
               )}
             </View>
           </View>
           <View style={styles.Circle3}>
-            <TouchableOpacity onPress={this.calcPredictions}>
-              <Text
-                style={{ color: '#ffc24d', fontWeight: 'bold', textAlign: 'center', marginTop: 20 }}
-              >
-                Check
-              </Text>
+            <TouchableOpacity onPress={this.handlePredictions}>
+              <Text style={styles.checkButton}>Check</Text>
             </TouchableOpacity>
           </View>
           {!this.state.team1 && <Text style={styles.Circle2Txt}>HOME</Text>}
