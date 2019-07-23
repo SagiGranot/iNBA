@@ -167,7 +167,7 @@ export default class HomeScreen extends React.Component {
               </ScrollView>
             </View>
           )}
-          <News data={state.news} />
+          {!state.selected && <News data={state.news} />}
           {state.selected && state.teamPlayers.message === "Team's details Fetched!" && (
             <View style={styles.statsBox}>
               <View style={styles.headerStats}>
