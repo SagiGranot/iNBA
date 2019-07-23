@@ -14,6 +14,7 @@ import {
 import { Icon } from 'expo'
 import styles from '../styles/styles_screen1'
 import getStatsDetails from '../getTeamStats'
+import News from '../components/news'
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -166,16 +167,7 @@ export default class HomeScreen extends React.Component {
               </ScrollView>
             </View>
           )}
-          {!state.selected && state.news && (
-            <View style={styles.newsView}>
-              <Text style={styles.home}>NEWS</Text>
-              <View style={styles.table}>
-                {this.state.news.map((item, i) => {
-                  return this.createTableRow(i)
-                })}
-              </View>
-            </View>
-          )}
+          <News data={state.news} />
           {state.selected && state.teamPlayers.message === "Team's details Fetched!" && (
             <View style={styles.statsBox}>
               <View style={styles.headerStats}>

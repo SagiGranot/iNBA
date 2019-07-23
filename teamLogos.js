@@ -28,4 +28,4 @@ export const TeamsLogos = [
     { name: "SAS", url: require("./assets/images/SAS_logo.png") },
     { name: "TOR", url: require("./assets/images/TOR_logo.png") },
     { name: "UTA", url: require("./assets/images/UTA_logo.png") }
-];
+]
