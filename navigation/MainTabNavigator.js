@@ -43,7 +43,7 @@ const LeadersStack = createStackNavigator({
 
 LeadersStack.navigationOptions = {
   tabBarLabel: 'Leaders',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-list-box" />,
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-star" />,
   tabBarOptions: {
     style: {
       height: 50,
@@ -58,7 +58,7 @@ const StandingsStack = createStackNavigator({
 
 StandingsStack.navigationOptions = {
   tabBarLabel: 'Standings',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-star" />,
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-list-box" />,
   tabBarOptions: {
     style: {
       height: 50,

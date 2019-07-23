@@ -11,87 +11,6 @@ import {
   ImageBackground
 } from 'react-native'
 
-export default class SignInScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Please sign in'
-  }
-  constructor(props) {
-    super(props)
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
-
-  onClickListener = viewId => {
-    Alert.alert('Alert', 'Button pressed ' + viewId)
-  }
-  _signInAsync = async () => {
-    console.log(this.state.email)
-    await AsyncStorage.setItem('userToken', this.state.email)
-    this.props.navigation.navigate('App')
-  }
-  render() {
-    return (
-      <ImageBackground
-        source={require('../assets/images/nba.jpg')}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Image
-              style={styles.inputIcon}
-              source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }}
-            />
-            <TextInput
-              style={styles.inputs}
-              placeholder="Email"
-              keyboardType="email-address"
-              underlineColorAndroid="transparent"
-              onChangeText={email => this.setState({ email })}
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Image
-              style={styles.inputIcon}
-              source={{ uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db' }}
-            />
-            <TextInput
-              style={styles.inputs}
-              placeholder="Password"
-              secureTextEntry
-              underlineColorAndroid="transparent"
-              onChangeText={password => this.setState({ password })}
-            />
-          </View>
-
-          <TouchableHighlight
-            style={[styles.buttonContainer, styles.loginButton]}
-            onPress={this._signInAsync}
-          >
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            style={styles.buttonContainer}
-            onPress={() => this.onClickListener('restore_password')}
-          >
-            <Text>Forgot your password?</Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            style={styles.buttonContainer}
-            onPress={() => this.onClickListener('register')}
-          >
-            <Text>Register</Text>
-          </TouchableHighlight>
-        </View>
-      </ImageBackground>
-    )
-  }
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -136,5 +55,86 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: 'white'
+  },
+  imgBg: {
+    width: '100%',
+    height: '100%'
   }
 })
+
+export default class SignInScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Please sign in'
+  }
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      password: ''
+    }
+  }
+
+  onClickListener = viewId => {
+    Alert.alert('Alert', 'Button pressed ' + viewId)
+  }
+  handleSignInAsync = async () => {
+    await AsyncStorage.setItem('userToken', this.state.email)
+    this.props.navigation.navigate('App')
+  }
+  render() {
+    return (
+      <ImageBackground source={require('../assets/images/nba.jpg')} style={styles.imgBg}>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <Image
+              style={styles.inputIcon}
+              source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }}
+            />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Email"
+              keyboardType="email-address"
+              underlineColorAndroid="transparent"
+              onChangeText={email => this.setState({ email })}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Image
+              style={styles.inputIcon}
+              source={{ uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db' }}
+            />
+            <TextInput
+              style={styles.inputs}
+              placeholder="Password"
+              secureTextEntry
+              underlineColorAndroid="transparent"
+              onChangeText={password => this.setState({ password })}
+            />
+          </View>
+
+          <TouchableHighlight
+            style={[styles.buttonContainer, styles.loginButton]}
+            onPress={this.handleSignInAsync}
+          >
+            <Text style={styles.loginText}>Login</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.buttonContainer}
+            onPress={() => this.onClickListener('restore_password')}
+          >
+            <Text>Forgot your password?</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.buttonContainer}
+            onPress={() => this.onClickListener('register')}
+          >
+            <Text>Register</Text>
+          </TouchableHighlight>
+        </View>
+      </ImageBackground>
+    )
+  }
+}
