@@ -1,15 +1,8 @@
 import React from 'react'
-import {
-  Image,
-  ImageBackground,
-  View,
-  Text,
-  Dimensions,
-  ActivityIndicator,
-  ScrollView
-} from 'react-native'
+import { Image, ImageBackground, View, Text, Dimensions, ScrollView } from 'react-native'
 import styles from '../styles/styles_screen4'
 import setTeamImage from '../setTeamImage'
+import Leaders from '../components/leaders'
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -38,7 +31,6 @@ export default class LinksScreen extends React.Component {
     fetch('https://buzzer-beater.live/api/nba/leaders')
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         const minutes_total = []
         const minutes_average = []
         const points_total = []
@@ -85,67 +77,20 @@ export default class LinksScreen extends React.Component {
   }
   render() {
     const state = this.state
-    console.log(state.points_average)
     return (
       <ImageBackground source={require('../assets/images/nba.jpg')} style={styles.imgBg}>
         <View style={styles.padd}></View>
         <ScrollView>
-          <View style={styles.firstTable}>
-            <Text style={styles.tableSubject}>Minutes (Total)</Text>
-            <View style={styles.table}>
-              <View style={styles.headerRow}>
-                <Text style={styles.prop1}>Rank</Text>
-                <Text style={styles.prop}>Player</Text>
-                <Text style={styles.prop}>Team</Text>
-                <Text style={styles.prop1}>Score</Text>
-              </View>
-              {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-              {state.minutes_total &&
-                state.minutes_total.map((rowData, i) => this.createTableRow(rowData, i))}
-            </View>
-          </View>
-          <View style={styles.aTable}>
-            <Text style={styles.tableSubject}>Minutes (Average)</Text>
-            <View style={styles.table}>
-              <View style={styles.headerRow}>
-                <Text style={styles.prop1}>Rank</Text>
-                <Text style={styles.prop}>Player</Text>
-                <Text style={styles.prop}>Team</Text>
-                <Text style={styles.prop1}>Score</Text>
-              </View>
-              {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-              {state.minutes_total &&
-                state.minutes_average.map((rowData, i) => this.createTableRow(rowData, i))}
-            </View>
-          </View>
-          <View style={styles.aTable}>
-            <Text style={styles.tableSubject}>Points (Total)</Text>
-            <View style={styles.table}>
-              <View style={styles.headerRow}>
-                <Text style={styles.prop1}>Rank</Text>
-                <Text style={styles.prop}>Player</Text>
-                <Text style={styles.prop}>Team</Text>
-                <Text style={styles.prop1}>Score</Text>
-              </View>
-              {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-              {state.minutes_total &&
-                state.points_total.map((rowData, i) => this.createTableRow(rowData, i))}
-            </View>
-            <View style={styles.aTable}>
-              <Text style={styles.tableSubject}>Points (Average)</Text>
-              <View style={styles.table}>
-                <View style={styles.headerRow}>
-                  <Text style={styles.prop1}>Rank</Text>
-                  <Text style={styles.prop}>Player</Text>
-                  <Text style={styles.prop}>Team</Text>
-                  <Text style={styles.prop1}>Score</Text>
-                </View>
-                {state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-                {state.minutes_total &&
-                  state.points_average.map((rowData, i) => this.createTableRow(rowData, i))}
-              </View>
-            </View>
-          </View>
+          {state.minutes_total && (
+            <Leaders tableName="Minutes (Total)" data={state.minutes_total} />
+          )}
+          {state.minutes_average && (
+            <Leaders tableName="Minutes (Average)" data={state.minutes_average} />
+          )}
+          {state.points_total && <Leaders tableName="Points (Total)" data={state.points_total} />}
+          {state.points_average && (
+            <Leaders tableName="Points (Average)" data={state.points_average} />
+          )}
         </ScrollView>
       </ImageBackground>
     )
