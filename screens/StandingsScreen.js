@@ -1,16 +1,8 @@
 import React from 'react'
-import {
-  ImageBackground,
-  View,
-  Text,
-  Button,
-  ActivityIndicator,
-  Image,
-  ScrollView
-} from 'react-native'
+import { ImageBackground, View, Text, Button, Image, ScrollView } from 'react-native'
 import styles from '../styles/styles_screen2'
 import setTeamImage from '../setTeamImage'
-
+import Standings from '../components/standings'
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -87,35 +79,9 @@ export default class SettingsScreen extends React.Component {
           </View>
           <ScrollView>
             <View style={styles.box}>
-              <Text style={styles.tableSubject}>Southeast</Text>
-              <View style={styles.table}>
-                {this.createHeaderRow()}
-                {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-                {this.state.Eastern &&
-                  this.state.Eastern.divisions[0].teams.map((rowData, i) =>
-                    this.createTableRow(rowData, i)
-                  )}
-              </View>
-              {/*  */}
-              <Text style={styles.tableSubject}>Central</Text>
-              <View style={styles.table}>
-                {this.createHeaderRow()}
-                {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-                {this.state.Eastern &&
-                  this.state.Eastern.divisions[1].teams.map((rowData, i) =>
-                    this.createTableRow(rowData, i)
-                  )}
-              </View>
-              {/*  */}
-              <Text style={styles.tableSubject}>Atlantic</Text>
-              <View style={styles.table}>
-                {this.createHeaderRow()}
-                {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-                {this.state.Eastern &&
-                  this.state.Eastern.divisions[2].teams.map((rowData, i) =>
-                    this.createTableRow(rowData, i)
-                  )}
-              </View>
+              {this.state.Eastern && <Standings title="Southeast" data={this.state.Eastern} />}
+              {this.state.Eastern && <Standings title="Central" data={this.state.Eastern} />}
+              {this.state.Eastern && <Standings title="Atlantic" data={this.state.Eastern} />}
             </View>
           </ScrollView>
         </ImageBackground>
@@ -128,35 +94,9 @@ export default class SettingsScreen extends React.Component {
         </View>
         <ScrollView>
           <View style={styles.box}>
-            <Text style={styles.tableSubject}>Pacific</Text>
-            <View style={styles.table}>
-              {this.createHeaderRow()}
-              {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-              {this.state.Eastern &&
-                this.state.Western.divisions[0].teams.map((rowData, i) =>
-                  this.createTableRow(rowData, i)
-                )}
-            </View>
-            {/*  */}
-            <Text style={styles.tableSubject}>Southwest</Text>
-            <View style={styles.table}>
-              {this.createHeaderRow()}
-              {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-              {this.state.Eastern &&
-                this.state.Western.divisions[1].teams.map((rowData, i) =>
-                  this.createTableRow(rowData, i)
-                )}
-            </View>
-            {/*  */}
-            <Text style={styles.tableSubject}>Northwest</Text>
-            <View style={styles.table}>
-              {this.createHeaderRow()}
-              {this.state.isLoading && <ActivityIndicator size="large" color="#fff" />}
-              {this.state.Eastern &&
-                this.state.Western.divisions[2].teams.map((rowData, i) =>
-                  this.createTableRow(rowData, i)
-                )}
-            </View>
+            {this.state.Eastern && <Standings title="Pacific" data={this.state.Western} />}
+            {this.state.Eastern && <Standings title="Southwest" data={this.state.Western} />}
+            {this.state.Eastern && <Standings title="Northwest" data={this.state.Western} />}
           </View>
         </ScrollView>
       </ImageBackground>
