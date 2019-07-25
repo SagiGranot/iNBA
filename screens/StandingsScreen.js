@@ -1,7 +1,6 @@
 import React from 'react'
-import { ImageBackground, View, Text, Button, Image, ScrollView } from 'react-native'
+import { ImageBackground, View, Button, ScrollView } from 'react-native'
 import styles from '../styles/styles_screen2'
-import setTeamImage from '../setTeamImage'
 import Standings from '../components/standings'
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -18,8 +17,6 @@ export default class SettingsScreen extends React.Component {
     }
     this.handleEastern = this.handleEastern.bind(this)
     this.handleEasternOFF = this.handleEasternOFF.bind(this)
-    this.createTableRow = this.createTableRow.bind(this)
-    this.createHeaderRow = this.createHeaderRow.bind(this)
   }
   componentDidMount() {
     const teams = require('../teamLogos')
@@ -40,34 +37,6 @@ export default class SettingsScreen extends React.Component {
   }
   handleEasternOFF() {
     this.setState({ isEastern: false })
-  }
-  createTableRow(data, i) {
-    const teamImage = setTeamImage(data, this.state.teams.TeamsLogos)
-    return (
-      <View key={i} style={styles.bodyRow}>
-        <View style={styles.teamBox}>
-          <Image style={styles.logo} source={teamImage} />
-          <Text style={styles.logoTxt}> {data.name}</Text>
-        </View>
-        <Text style={styles.tableTxt}>{data.wins}</Text>
-        <Text style={styles.tableTxt}>{data.losses}</Text>
-        <Text style={styles.tableTxt}>{data.win_pct}</Text>
-        <Text style={styles.tableTxt}>{data.games_behind.league}</Text>
-        <Text style={styles.tableTxt}>{data.games_behind.conference}</Text>
-      </View>
-    )
-  }
-  createHeaderRow() {
-    return (
-      <View style={styles.headerRow}>
-        <Text style={styles.headerTxt}>Team</Text>
-        <Text style={styles.headerTxt}>Wins</Text>
-        <Text style={styles.headerTxt}>Losses</Text>
-        <Text style={styles.headerTxt}>% Win</Text>
-        <Text style={styles.headerTxt}>GB League</Text>
-        <Text style={styles.headerTxt}>GB Conf.</Text>
-      </View>
-    )
   }
   render() {
     if (this.state.isEastern)
