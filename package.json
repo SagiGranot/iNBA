@@ -1,21 +1,40 @@
 {
+  "checkSubmission": {
+    "ex": "Final",
+    "students": [
+      {
+        "id": "302999693",
+        "fullName": "Sagi Granot",
+        "email": "sagigranot@gmail.com"
+      },
+      {
+        "id": "311246433",
+        "fullName": "Netta Richer",
+        "email": "nettaricher1@gmail.com"
+      }
+    ],
+    "os": "Mac",
+    "device": "iOS",
+    "deliveryDate": "01/07/2019",
+    "delay": false,
+    "delayReason": "",
+    "comments": ""
+  },
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
   },
   "jest": {
-    "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
-    ]
+    "preset": "jest-expo"
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
     "expo": "^32.0.0",
+    "jest": "^24.8.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-navigation": "^3.0.9"

@@ -13,6 +13,7 @@ export default class Leaders extends Component {
     }
   }
   componentDidMount() {
+    console.log(this.props.data)
     const teams = require('../teamLogos')
     const leaders = this.props.data
     const title = this.props.tableName
