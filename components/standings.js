@@ -13,6 +13,7 @@ export default class Standings extends Component {
     }
   }
   componentDidMount() {
+    console.log(this.props.data)
     const teams = require('../teamLogos')
     const standings = this.props.data
     const title = this.props.tableName

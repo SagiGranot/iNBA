@@ -3,6 +3,9 @@ import React from 'react'
 import App from '../App'
 import renderer from 'react-test-renderer'
 import Leaders from '../components/leaders'
+import News from '../components/news'
+import Standings from '../components/standings'
+
 describe('App snapshot', () => {
   it('renders the loading screen', async () => {
     const tree = renderer.create(<App />).toJSON()
@@ -22,7 +25,7 @@ describe('<App />', () => {
   })
 })
 
-describe('TodoList tests', function() {
+describe('Leaders table tests', function() {
   test('renders correctly', async () => {
     const data = [
       {
@@ -63,5 +66,54 @@ describe('TodoList tests', function() {
     const testRenderer = renderer.create(<Leaders data={data} tableName="Test" />)
     expect(testRenderer.root.props).toHaveProperty('data')
     expect(testRenderer.root.props.data).toHaveLength(1)
+  })
+})
+
+describe('News table tests', function() {
+  test('renders correctly', async () => {
+    const data = [
+      {
+        authors: [],
+        body:
+          'OAKLAND, Calif. -- Houston Rockets general manager Daryl Morey popularized the 5% theory',
+        dataType: 'news',
+        date: '2019-06-07',
+        dateTime: '2019-06-07T12:26:00Z',
+        title: "Five moments that helped pave Toronto's road to the NBA Finals"
+      }
+    ]
+
+    const testRenderer = renderer.create(<News data={data} tableName="Test" />)
+    expect(testRenderer.root.props).toHaveProperty('data')
+    expect(testRenderer.root.props.data).toHaveLength(1)
+  })
+})
+
+describe('Standings table tests', function() {
+  test('renders correctly', async () => {
+    const data = {
+      id: '3960cfac-7361-4b30-bc25-8d393de6f62f',
+      name: 'EASTERN CONFERENCE',
+      alias: 'EASTERN',
+      divisions: [
+        {
+          alias: 'SOUTHEAST',
+          teams: [
+            {
+              id: '583ed157-fb46-11e1-82cb-f4ce4684ea4c',
+              name: 'Magic',
+              market: 'Orlando',
+              wins: 42,
+              losses: 40,
+              games_behind: { league: 18, conference: 18, division: 0 }
+            }
+          ]
+        }
+      ]
+    }
+
+    const testRenderer = renderer.create(<Standings data={data} tableName="Test" />)
+    expect(testRenderer.root.props).toHaveProperty('data')
+    expect(testRenderer.root.props.data.divisions).toHaveLength(1)
   })
 })
